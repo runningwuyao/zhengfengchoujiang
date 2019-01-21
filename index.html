@@ -278,7 +278,7 @@
 				</div>
 			</div>
 			<div class="intro">我是谁</div>
-			<div class="win_stop">中奖</div>
+			<!-- <div class="win_stop" onclick="stop();">中奖</div> -->
 			<button class="close">X</button>
 		</div>
 
@@ -388,20 +388,6 @@
 
     		var winners = $('.nickname')
 			// var bless = $('.intro')
-		
-							// 中奖滚轮
-		function startNum() {
-		num = Math.floor(Math.random() * numpeoper);
-		winners.html(item.nick_name[num]);
-		bless.html(item.intro[num]);
-		var t = setTimeout(function(){
-			
-		},100)
-		// t = setTimeout(startNum, 0);
-	
-}
-				
-			
 
 	        var table = new Array;
 		    for (var i = 0; i < personArray.length; i++) {
@@ -467,25 +453,75 @@
 				"特等奖",
 			]
 			
-
-// 			// 中奖滚轮
-// 		function startNum() {
-// 		num = Math.floor(Math.random() * numpeoper);
-// 		winners.html(personArray[num].nick_name[num]);
-// 		bless.html(personArray[num].intro[num]);
-// 		t = setTimeout(startNum, 0);
-	
-// }
-// 		//停止跳动
-// 	function stop() {
-// 	pcount = xinm.length-1;
-// 	clearInterval(t);
-// 	t = 0;
-// }
-
+		var good = false;
+		var personIndex=0;
+		// var	flag=false
 			function lucky(){
-				// startNum();
+				
+			
+				
+				// if(!flag){
+				// 	$('.show').html("暂停")
+				// }else{
+				// 	$('.show').html("抽奖")
+				// }
+				// flag=!flag
+		
+				
+			
+			
+				if(!good){
+					console.log(111);
+					
+				$('.show').html('暂停')
+				// clearInterval(time);				
+						 time = setInterval(function(){
+								if(personIndex>personArray.length-1){
+									personIndex=0
+								}
+								var nickName=personArray[personIndex].nick_name
+								var avator=personArray[personIndex].avatar
+								var intro=personArray[personIndex].intro
+								$(".nickname").text(nickName)
+								$(".intro").text(intro)
+								$(".avator").attr("src",avator)
+								// console.log(personIndex);
+								personIndex++ 
+							},200)
+								// setTimeout(function(){
+									
+								// },300)
+							
+					// good =false;	
+					}else{
+						console.log(222);
+						clearInterval(time);
+						$('.show').html('抽奖')
+						clearInterval(time);
+									var name=$(".nickname").text()		 
+										// 渲染中奖框			
+									$(".congraturation").fadeIn().html("恭喜"+"<span style='color:red;font-size:80px;font-family:STKaiti'>"+name+"</span>"+"获得"+arr[0]) 
+									if(arr.length-1 == 0){
+										$(".show").removeAttr('onclick')	
+									}
+										// arr.shift()  //删除奖项
+										
+									arr.splice(0,1);
+									console.log(arr);
+											// 删除人名
+											console.log(name);
+											
+											personArray.forEach(function(item,index){
+											if(item.nick_name==name){
+												personArray.splice(index,1) 
+											}
 
+									})
+
+									console.log(personArray);
+				
+					}
+					good =!good;
 				wined = getRandom(0,8)
 				if (luckyArr.length <= 0) {
 					alert('无数据');
@@ -508,55 +544,46 @@
 								// personArray.forEach(function(item,index){
 									// 先用变量获取到数组， 再将变量名放入该类的text里面，图片用.attr("src",avator)
 									// 放入定时器里面
-								var personIndex=0
-								// })
-				var time=setInterval(function(){
-								if(personIndex>personArray.length-1){
-									personIndex=0
-								}
-								var nickName=personArray[personIndex].nick_name
-								var avator=personArray[personIndex].avatar
-								var intro=personArray[personIndex].intro
-								$(".nickname").text(nickName)
-								$(".intro").text(intro)
-								$(".avator").attr("src",avator)
-								console.log(personIndex);
-								personIndex++
-								
-	
-							},200)
-
-								$(".win_stop").click(function(){
-									clearInterval(time)
-									var name=$(".nickname").text()		 
-										// 渲染中奖框			
-									$(".congraturation").fadeIn().html("恭喜"+"<span style='color:red;font-size:80px;font-family:STKaiti'>"+name+"</span>"+"获得"+arr[0]) 
-									if(arr.length-1 == 0){
-										$(".show").removeAttr('onclick')	
-									}
-									arr.shift()  //删除奖项
-									// 遍历数组，获取到数组里面的项等于 渲染框中的项，然后通过索引删除数组中的1项
-									personArray.forEach(function(item,index){
-											if(item.nick_name==name){
-												personArray.splice(index,1)
-											}
-
-									})
-
-									console.log(personArray);
-									
-								})
-								
-
-
-
+				// 				var personIndex=0
+				// 				// })
+				// var time = setInterval(function(){
+				// 				if(personIndex>personArray.length-1){
+				// 					personIndex=0
+				// 				}
+				// 				var nickName=personArray[personIndex].nick_name
+				// 				var avator=personArray[personIndex].avatar
+				// 				var intro=personArray[personIndex].intro
+				// 				$(".nickname").text(nickName)
+				// 				$(".intro").text(intro)
+				// 				$(".avator").attr("src",avator)
+				// 				// console.log(personIndex);
+				// 				personIndex++ 
+				// 			},200)
+							// 点击停止
+								// setTimeout(function(){
+								// 	clearInterval(time);
+								// 	var name=$(".nickname").text()		 
+								// 		// 渲染中奖框			
+								// 	$(".congraturation").fadeIn().html("恭喜"+"<span style='color:red;font-size:80px;font-family:STKaiti'>"+name+"</span>"+"获得"+arr[0]) 
+								// 	if(arr.length-1 == 0){
+								// 		$(".show").removeAttr('onclick')	
+								// 	}
+								// 		// arr.shift()  //删除奖项
+										
+								// 	arr.splice(0,1);
+								// 	console.log(arr);
+								// },2000)
+								// console.log(arr);
 							
-		
-				
-
-            	// if ('block' == list.style.display) {
+									
+									// 遍历数组，获取到数组里面的项等于 渲染框中的项，然后通过索引删除数组中的1项
+								
+				// if ('block' == list.style.display) {
             	// 	luckyArr.splice(random,1);
             	// }
+			
+
+
 				// 2随机弹框
 				$('.animated').addClass(win[wined])
 				console.log(win[wined]);
@@ -579,6 +606,7 @@
 					$(".congraturation").fadeOut()
 					$('.animated').removeClass(win[wined]).css({display:'none'})
 					// player.play()
+			
 					clearInterval(timer)
 					player.play()
 					var timer = setInterval(() => {
@@ -591,6 +619,40 @@
 					},150)
 				})
 			}
+		 
+function stop(){
+	
+	// clearInterval(time)
+				var name=$(".nickname").text()		 
+					// 渲染中奖框			
+				$(".congraturation").fadeIn().html("恭喜"+"<span style='color:red;font-size:80px;font-family:STKaiti'>"+name+"</span>"+"获得"+arr[0]) 
+				if(arr.length-1 == 0){
+					$(".show").removeAttr('onclick')	
+				}
+					// arr.shift()  //删除奖项
+					
+				arr.splice(0,1);
+				console.log(arr);
+				
+				// 遍历数组，获取到数组里面的项等于 渲染框中的项，然后通过索引删除数组中的1项
+				personArray.forEach(function(item,index){
+						if(item.nick_name==name){
+							personArray.splice(index,1) 
+						}
+
+				})
+
+	console.log(personArray);
+	
+
+}
+			// $(".win_stop").click(function(){
+									
+									
+									
+			// 					})
+
+		
 
 			function getRandom(lowerInteger, upperInteger) {
 			     var choices = upperInteger - lowerInteger + 1;
@@ -828,10 +890,6 @@
 			}
  
 		 
-		</script>
-		<script>
-
-		
 		</script>
 		
 	</body>
